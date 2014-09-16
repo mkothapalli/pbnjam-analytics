@@ -85,8 +85,19 @@ void print(unsigned int id, unsigned int eventId, Event* event, Country* country
   std::cout << "      }";
 }
 
-int main()
+int main(int argc, const char* argv[])
 {
+  unsigned int maxNumEntries = std::numeric_limits<unsigned int>::max();
+  if (argc > 1)
+  {
+    maxNumEntries = ::strtoul(argv[1], NULL, 10);
+    if (maxNumEntries < 1)
+    {
+      std::cerr << "Usage: " << argv[0] << " [max number of entries]\n";
+      return -1;
+    }
+  }
+
   std::cout << "{\n";
   std::cout << "  \"data\": {\n";
   std::cout << "    \"reportpacks\": [";
@@ -94,9 +105,13 @@ int main()
   MyGen deviceGen(2, 0, deviceCount - 1);
   unsigned int id = 0;
 
-  for (unsigned int eventId = 0; eventId < eventCount; ++eventId)
+  for (unsigned int eventId = 0;
+       (eventId < eventCount) && (id < maxNumEntries);
+       ++eventId)
   {
-    for (Country* country = countries; country < countriesEnd; ++country)
+    for (Country* country = countries;
+         (country < countriesEnd) && (id < maxNumEntries);
+         ++country)
     {
       if (id > 0)
         std::cout << ",";
