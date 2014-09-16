@@ -10,7 +10,7 @@ Kothapalli, Malini.
 Solomon, Joshua.
 
 ## Description
-###We will add the video demo and demo-page to git in few minutes , please revisit to checkout 
+###video: https://drive.google.com/a/akamai.com/file/d/0B6OlWg09PJjEYWNzTlVvbjE4WnM/edit?usp=sharing 
 
 We wanted to create a cool visualization of the data returned by one of the OPEN APIs.
 
