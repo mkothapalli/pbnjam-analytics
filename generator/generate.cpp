@@ -5,6 +5,7 @@
 #include "events.h"
 #include "countries.h"
 
+//! @brief Generator of random numbers from a uniform distribution.
 class MyGen
 {
  private:
@@ -12,10 +13,28 @@ class MyGen
   std::uniform_int_distribution<unsigned int> dist;
 
  public:
+  /**
+   * @brief Constructor.
+   *
+   * @param seed The seed for the generator.
+   * @param from The minimum value returned.
+   * @param to The maximum value to ever be returned.
+   */
   MyGen(unsigned int seed, unsigned int from, unsigned int to)
     : gen(seed), dist(from, to) {}
 
+  /**
+   * @brief Generate a new random number.
+   *
+   * @return The generated number.
+   */
   unsigned int get() { return dist(gen); }
+
+  /**
+   * @brief Operator to generate a new random number.
+   *
+   * @return The generated number.
+   */
   unsigned int operator()() { return dist(gen); }
 };
 
@@ -26,11 +45,25 @@ MyGen lowRebufGen(1, 100, 300);
 void print(unsigned int id, unsigned int eventId, Event* event, Country* country,
            const char* device)
 {
+  // If a country's average speed is 10000, then it's "high speed". Speeds were
+  // improvised, so we just put a number that will pick the countries with the
+  // fastest connection as "high".
   bool isHigh = (country->baseRate >= 10000);
+
+  // Viewing minutes is andomly generated, according to the event's popularity.
   unsigned int minutes = event->getMins();
+
+  // Ratio of play duration that was HD. Depends on whether the country's
+  // connection is "high speed" or not.
   double r = isHigh? 0.7 : 0.3;
+
+  // Number of rebufferings. Uses the appropriate generator.
   unsigned int rebufs = isHigh? highRebufGen() : lowRebufGen();
+
+  // Number of views.
   unsigned int views = isHigh? (event->popularity / 10) : (event->popularity / 100);
+
+  // Aggregate bitrate across all the streams (in Kbps).
   unsigned int bitrate = (isHigh? 4000 : 500) * views;
 
   std::cout << "\n";
@@ -43,8 +76,8 @@ void print(unsigned int id, unsigned int eventId, Event* event, Country* country
   std::cout << "        \"device\": \"" << device << "\",\n";
   std::cout << "        \"country\": \"" << country->name << "\",\n";
   std::cout << "        \"metrics\": {\n";
-  std::cout << "          \"HD_play_duration\": \"" << (unsigned int)(r * minutes) << "\",\n";
-  std::cout << "          \"SD_play_duration\": \"" << (unsigned int)((1-r) * minutes) << "\",\n";
+  std::cout << "          \"HD_play_duration\": \"" << (unsigned int)(r * minutes / 60) << "\",\n";
+  std::cout << "          \"SD_play_duration\": \"" << (unsigned int)((1-r) * minutes * 60) << "\",\n";
   std::cout << "          \"bitrate\": \"" << bitrate << "\",\n";
   std::cout << "          \"bitrate_views\": \"" << rebufs << "\",\n";
   std::cout << "          \"views\": \"" << views << "\"\n";
@@ -57,17 +90,19 @@ int main()
   std::cout << "{\n";
   std::cout << "  \"data\": {\n";
   std::cout << "    \"reportpacks\": [";
-  MyGen eventGen(1, 0, eventCount - 1);
-  MyGen deviceGen(2, 0, deviceCount - 1);
-  MyGen countryGen(3, 0, countryCount - 1);
 
+  MyGen deviceGen(2, 0, deviceCount - 1);
   unsigned int id = 0;
+
   for (unsigned int eventId = 0; eventId < eventCount; ++eventId)
   {
     for (Country* country = countries; country < countriesEnd; ++country)
     {
-      if (id > 0) std::cout << ",";
+      if (id > 0)
+        std::cout << ",";
+
       unsigned int deviceId = deviceGen();
+
       print(id, eventId, events + eventId, country, devices[deviceId]);
       ++id;
     }

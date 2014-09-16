@@ -4,10 +4,17 @@
 #include <random>
 #include "devices.h"
 
+/**
+ * Statistics for a country. Generated based on a country's internet speed
+ * (compared to others around the world).
+ */
 struct Country
 {
  public:
+  //! Name of the country.
   const char* const name;
+
+  //! Average rate for a Desktop PC connecting from the country.
   const unsigned int baseRate;
 
  private:
@@ -18,6 +25,14 @@ struct Country
   Country(const char* n, unsigned int b)
     : name(n), baseRate(b), gen(b), dis(0, 0.3) {}
 
+  /**
+   * @brief Generate a random rate, based on device ID and baseRate.
+   * Not currently used.
+   *
+   * @param deviceId the device ID
+   *
+   * @return A new rate.
+   */
   unsigned int randRate(unsigned int deviceId)
   {
     const double* devr = (deviceId == 0 || deviceId == 3)? lowRateRatio : highRateRatio;
@@ -25,6 +40,10 @@ struct Country
   }
 };
 
+/**
+ * A list of countries, sorted according to their average connection speed.
+ * Connection speeds are generated according to the country's speed ranking.
+ */
 static Country countries[] =
 {
   Country("South Korea",   200000),
@@ -69,7 +88,9 @@ static Country countries[] =
   Country("Paraguay",          10),
 };
 
+//! Number of countries generated.
 static const unsigned int countryCount = sizeof(countries) / sizeof(countries[0]);
+
 static Country* countriesEnd = countries + countryCount;
 
 #endif

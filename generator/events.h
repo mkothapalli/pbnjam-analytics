@@ -4,18 +4,27 @@
 #include <functional>
 #include <random>
 
+//! Statistics for an event. Their values are improvised.
 class Event
 {
  public:
-  //static const time_t oct012013 = 1380585600;
-  //static const time_t sep262013 = 1380196800;
-  static const time_t sep012013 = 1378036800;
-  static const unsigned int oneDay = 3600 * 24;
   const std::string name;
   const unsigned int fromDate;
   const unsigned int toDate;
   const unsigned int popularity;
 
+  /**
+   * @brief Constructor.
+   *
+   * @param n The name of the event.
+   * @param f Start time of the event (Epoch Time).
+   * @param t End time of the event (Epoch Time).
+   * @param maxMins Maximum time (in minutes) a normal person would spend
+   * watching the event (generated).
+   * @param fromSepFirst2013 If this is true, f and t represent number of days
+   * from Sep 1, 2013. Otherwise, they represent Epoch Times (sec from Jan 1,
+   * 1970).
+   */
   Event(const std::string& n, unsigned int f, unsigned int t,
         unsigned int maxMins, bool fromSepFirst2013)
     : name(n),
@@ -27,13 +36,20 @@ class Event
   {
   }
 
+  //! @return Randomly generated number of minutes.
   unsigned int getMins() { return dist(rng); }
 
  private:
+  //static const time_t oct012013 = 1380585600;
+  //static const time_t sep262013 = 1380196800;
+  static const time_t sep012013 = 1378036800;
+  static const unsigned int oneDay = 3600 * 24;
+
   std::mt19937 rng;
   std::uniform_int_distribution<unsigned int> dist;
 };
 
+//! Generated events.
 static Event events[] =
 {
   Event("Champion's League 2013-2014", 1379419200, 1400932800, 1200 * 300000, false),
@@ -138,6 +154,7 @@ static Event events[] =
   Event("Event99", 384, 388, 110, true),
 };
 
+//! The number of generated events.
 static const unsigned int eventCount = sizeof(events) / sizeof(events[0]);
 
 #endif //EVENTS_H__
