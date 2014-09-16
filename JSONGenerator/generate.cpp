@@ -41,6 +41,8 @@ class MyGen
 
 MyGen highRebufGen(1, 2, 20);
 MyGen lowRebufGen(1, 100, 300);
+MyGen lowBitrateGen(3, 1, 20);
+MyGen highBitrateGen(4, 21, 40);
 
 void print(unsigned int id, unsigned int eventId, Event* event, Country* country,
            const char* device)
@@ -60,11 +62,14 @@ void print(unsigned int id, unsigned int eventId, Event* event, Country* country
   // Number of rebufferings. Uses the appropriate generator.
   unsigned int rebufs = isHigh? highRebufGen() : lowRebufGen();
 
-  // Number of views.
-  unsigned int views = isHigh? (event->popularity / 10) : (event->popularity / 100);
+  // Aggregate bitrate across all the streams (in Kbps). Use between two
+  // different generators, depending on whether this is a "high rate" country.
+  unsigned int bitrateBase = isHigh? highBitrateGen() : lowBitrateGen();
 
-  // Aggregate bitrate across all the streams (in Kbps).
-  unsigned int bitrate = (isHigh? 4000 : 500) * views;
+  unsigned int bitrate = bitrateBase * 17500 + 100000;
+
+  // Number of views.
+  unsigned int views = bitrateBase * 5000;
 
   std::cout << "\n";
   std::cout << "      {\n";
@@ -109,18 +114,13 @@ int main(int argc, const char* argv[])
        (eventId < eventCount) && (id < maxNumEntries);
        ++eventId)
   {
-    for (Country* country = countries;
-         (country < countriesEnd) && (id < maxNumEntries);
-         ++country)
-    {
-      if (id > 0)
-        std::cout << ",";
+    if (id > 0)
+      std::cout << ",";
 
-      unsigned int deviceId = deviceGen();
+    unsigned int deviceId = deviceGen();
 
-      print(id, eventId, events + eventId, country, devices[deviceId]);
-      ++id;
-    }
+    print(id, eventId, events + eventId, countries, devices[deviceId]);
+    ++id;
   }
 
   std::cout << "\n    ]\n";
