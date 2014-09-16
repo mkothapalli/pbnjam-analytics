@@ -41,6 +41,8 @@ class MyGen
 
 MyGen highRebufGen(1, 2, 20);
 MyGen lowRebufGen(1, 100, 300);
+MyGen lowBitrateGen(3, 1, 20);
+MyGen highBitrateGen(4, 21, 40);
 
 void print(unsigned int id, unsigned int eventId, Event* event, Country* country,
            const char* device)
@@ -63,8 +65,10 @@ void print(unsigned int id, unsigned int eventId, Event* event, Country* country
   // Number of views.
   unsigned int views = isHigh? (event->popularity / 10) : (event->popularity / 100);
 
-  // Aggregate bitrate across all the streams (in Kbps).
-  unsigned int bitrate = (isHigh? 4000 : 500) * views;
+  // Aggregate bitrate across all the streams (in Kbps). Use between two
+  // different generators, depending on whether this is a "high rate" country.
+  unsigned int bitrate = isHigh? highBitrateGen() : lowBitrateGen();
+  bitrate = bitrate * 17500 + 100000;
 
   std::cout << "\n";
   std::cout << "      {\n";
