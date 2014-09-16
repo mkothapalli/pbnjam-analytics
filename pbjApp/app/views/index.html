@@ -1,0 +1,104 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <base href="/"/>
+    <title></title>
+    <meta name="description" content="">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="../styles/d3/style.css">
+
+        <!-- endbuild -->
+</head>
+  <body ng-app="angularPassportApp">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!--[if lt IE 9]>
+    <script src="../bower_components/es5-shim/es5-shim.js"></script>
+    <script src="../bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <!--<div ui-view></div>-->
+   <div ng-include="" src="'partials/navbar.html'"></div>
+   <!-- <div class="container" ng-view="">
+
+    </div>-->
+    <div class="container" style="margin-top:50px" ui-view autoscroll="false"></div>
+
+    <script src="../bower_components/jquery/jquery.js"></script>
+    <script src="../bower_components/underscore/underscore.js"></script>
+
+    <script src="../bower_components/angular/angular.js"></script>
+
+        <!-- build:js(app) scripts/modules.js -->
+        <script src="../bower_components/angular-resource/angular-resource.js"></script>
+        <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
+        <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="../bower_components/angular-route/angular-route.js"></script>
+        <!--<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>-->
+        <script data-require="ui-bootstrap@*" data-semver="0.10.0" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.min.js"></script>
+        <script data-require="angular-animate@*" data-semver="1.2.9" src="http://code.angularjs.org/1.2.9/angular-animate.js"></script>
+        <script src="../bower_components/angular-http-auth/src/http-auth-interceptor.js"></script>
+        <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+        <script src="../scripts/lib/d3.min.js"></script>
+        <script src="../scripts/lib/moment.min.js"></script>
+        <script src="../scripts/lib/radialProgress.js"></script>
+        <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="../scripts/app.js"></script>
+
+        <script src="../scripts/controllers/main.js"></script>
+        <script src="../scripts/controllers/login.js"></script>
+        <script src="../scripts/controllers/navbar.js"></script>
+        <script src="../scripts/controllers/signup.js"></script>
+        <script src="../scripts/controllers/ph1.js"></script>
+        <script src="../scripts/directives/uniqueUsername.js"></script>
+        <script src="../scripts/services/Auth.js"></script>
+        <script src="../scripts/services/User.js"></script>
+        <script src="../scripts/directives/onFocus.js"></script>
+        <script src="../scripts/directives/mongooseError.js"></script>
+        <script src="../scripts/services/Session.js"></script>
+        <script src="../scripts/services/Oneuser.js"></script>
+        <script src="../scripts/services/StateIdentifier.js"></script>
+    <script src="../scripts/services/datastream.js"></script>
+
+            <script src="../scripts/lib/d3/table.js"></script>
+            <script src="../scripts/lib/d3/scatter.js"></script>
+            <script src="../scripts/lib/d3/brush.js"></script>
+            <script src="../scripts/lib/d3/histogram.js"></script>
+    <script src="../scripts/directives/myPostRepeatDirective.js"></script>
+
+    <!--<script src="scripts/services/dataStream.json"></script>-->
+<p id="result" ></p>
+<script type="text/javascript">
+   /* $("#result").text('hello');
+    var xhr = new XMLHttpRequest();
+    var accesstoken='akab-qdcb5y6tl5z7e65r-fee5f7iskjml2q4z';
+    var clientsecret='/vUk1J+zgxnvuI6CgL/d6BDqrg5/DadViUvhzQc9pZ4=';
+    var clienttoken='akab-2yuizqjkdbjf5w2g-62mcagvbznlc5ezq';
+    var url = 'https://akaa-okrux5gdffmxdjwx-pdpxffuv7reessk2.luna.akamaiapis.net/diagnostic-tools/v1/locations'+
+            '?access_token='+encodeURIComponent(accesstoken)+'&client_secret='+encodeURIComponent(clientsecret)+'&client_token='+
+            encodeURIComponent(clienttoken);
+    function handler(){
+     console.log("handler");
+     }
+     if(xhr) {
+     xhr.open('GET', url, true);
+     xhr.onreadystatechange = handler;
+     xhr.send();
+     }*/
+    </script>
+</body>
+</html>
