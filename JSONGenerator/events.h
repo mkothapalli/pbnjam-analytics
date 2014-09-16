@@ -28,8 +28,8 @@ class Event
   Event(const std::string& n, unsigned int f, unsigned int t,
         unsigned int maxMins, bool fromSepFirst2013)
     : name(n),
-    fromDate(fromSepFirst2013? (oneDay * f + sep012007) : f),
-    toDate(fromSepFirst2013? (oneDay * t + sep012007) : t),
+    fromDate(fromSepFirst2013? (oneDay * f + oct012013) : f),
+    toDate(fromSepFirst2013? (oneDay * t + oct012013) : t),
     popularity(maxMins),
     rng(std::hash<std::string>()(n)),
     dist(maxMins/2, maxMins)
@@ -40,10 +40,10 @@ class Event
   unsigned int getMins() { return dist(rng); }
 
  private:
-  //static const time_t oct012013 = 1380585600;
+  static const time_t oct012013 = 1380585600;
   //static const time_t sep262013 = 1380196800;
   //static const time_t sep012013 = 1378036800;
-  static const time_t sep012007 = 1188648000;
+  //static const time_t sep012007 = 1188648000;
   static const unsigned int oneDay = 3600 * 24;
 
   std::mt19937 rng;

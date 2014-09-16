@@ -114,18 +114,13 @@ int main(int argc, const char* argv[])
        (eventId < eventCount) && (id < maxNumEntries);
        ++eventId)
   {
-    for (Country* country = countries;
-         (country < countriesEnd) && (id < maxNumEntries);
-         ++country)
-    {
-      if (id > 0)
-        std::cout << ",";
+    if (id > 0)
+      std::cout << ",";
 
-      unsigned int deviceId = deviceGen();
+    unsigned int deviceId = deviceGen();
 
-      print(id, eventId, events + eventId, country, devices[deviceId]);
-      ++id;
-    }
+    print(id, eventId, events + eventId, countries, devices[deviceId]);
+    ++id;
   }
 
   std::cout << "\n    ]\n";
