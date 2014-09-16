@@ -1,6 +1,6 @@
 # pbnjam-analytics
 
-Pbnjam's brainchild, visualize akamai's media analytics data.
+Pb&jam's brainchild, visualize akamai's media analytics data.
 
 The pbnjam team developed this project for Tech Jam 2014 at Akamai. The members of this team are:
 
